@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+/* ─── Palette tokens (brief) ─────────────────────────────────────────────
+   sage  #A2B38B · blush #EED3D9 · mist #B5C0D0 · cream #F5E8DD
+   + derived inks for contrast (moss / clay / ink / abyss)                */
+@theme {
+  --color-sage: #a2b38b;
+  --color-blush: #eed3d9;
+  --color-mist: #b5c0d0;
+  --color-cream: #f5e8dd;
+  --color-paper: #f9f0e7;
+  --color-clay: #c9a5a0;
+  --color-moss: #5c6b48;
+  --color-ink: #22251b;
+  --color-abyss: #14170f;
+
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-body: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection {
+  background: var(--color-sage);
+  color: var(--color-abyss);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-ink) 28%, transparent);
+  border-radius: 8px;
+  border: 2px solid var(--color-cream);
+}
+
+/* Variable-font helper — set --w inline for Dynamic Weight */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+.vfont {
+  font-variation-settings: "wght" var(--w, 500);
+}
+
+/* Outlined display type (marquee, ghost numerals) */
+.text-outline {
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-ink) 52%, transparent);
+  color: transparent;
+}
+.text-outline-cream {
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-cream) 42%, transparent);
+  color: transparent;
+}
+
+/* Film grain overlay (fixed, z-[70]) */
+.grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+  mix-blend-mode: multiply;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────────────── */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes spin360 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.7);
+    opacity: 0.45;
+  }
+}
+/* Mesh-text chromatic fringes cycle through the palette */
+@keyframes fringe-a {
+  0%,
+  100% {
+    color: var(--color-moss);
+  }
+  33% {
+    color: var(--color-mist);
+  }
+  66% {
+    color: var(--color-clay);
+  }
+}
+@keyframes fringe-b {
+  0%,
+  100% {
+    color: var(--color-clay);
+  }
+  33% {
+    color: var(--color-sage);
+  }
+  66% {
+    color: var(--color-blush);
+  }
+}
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.anim-marquee {
+  animation: marquee 26s linear infinite;
+}
+.anim-spin-slow {
+  animation: spin360 18s linear infinite;
+}
+.anim-pulse-dot {
+  animation: pulse-dot 2.2s ease-in-out infinite;
+}
+.anim-floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+.anim-blink {
+  animation: blink 1.6s steps(2, start) infinite;
+}
+.warp-fringe-a {
+  animation: fringe-a 7s linear infinite;
+}
+.warp-fringe-b {
+  animation: fringe-b 7s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-marquee,
+  .anim-spin-slow,
+  .anim-floaty,
+  .anim-blink,
+  .warp-fringe-a,
+  .warp-fringe-b,
+  .anim-pulse-dot {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
