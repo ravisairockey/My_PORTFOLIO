@@ -100,14 +100,14 @@ export const FRAMES = [
   {
     src: "img/g-canyon.jpg",
     code: "F-02",
-    title: "RED MILE",
-    meta: "Canyon blockout → dressed pass · volumetric haze",
+    title: "LAVA VEIL",
+    meta: "Volcanic wasteland · molten river · towering monoliths · smoky dusk",
   },
   {
     src: "img/g-temple.jpg",
     code: "F-03",
-    title: "WHITE ALTAR",
-    meta: "Snow temple · trimmed masonry kit · cold LUT",
+    title: "FROZEN PULSE",
+    meta: "Icy cavern · electric light trails · misty water · ethereal glow · cold LUT",
   },
   {
     src: "img/g-alley.jpg",
