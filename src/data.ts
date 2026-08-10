@@ -118,8 +118,8 @@ export const FRAMES = [
   {
     src: "img/g-reef.jpg",
     code: "F-05",
-    title: "DROWNED NAVE",
-    meta: "Underwater ruins · caustics · fog volume",
+    title: "EMBERFALL",
+    meta: "Fire and ice clash · cavern arena · glowing embers · cinematic motion",
   },
   {
     src: "img/g-peaks.jpg",
