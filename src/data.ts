@@ -61,16 +61,23 @@ export type ReelVideo = {
 };
 
 export const VIDEOS: ReelVideo[] = [
-  {
+   {
     id: "RR-01",
     poster: "img/poster-ruins.jpg",
-    video: "videos/ruins.mp4",
-    file: "public/videos/ruins.mp4",
-    title: "ASHFALL",
-    sub: "Post-Apocalyptic Vegetation City Ruins",
-    meta: "Environment display render",
-    tech: "Unreal Engine 5 · Nanite foliage · Lumen GI",
+    video: "videos/Cyberpunk.mp4",
+    file: "public/videos/Cyberpunk.mp4",
+    title: "NEON NOCTURNE",
+    sub: "Character & Environment Cinematic Render",
+    meta: "Cinematic environment render",
+    tech: "Unreal Engine 5 · Lumen GI · Volumetric Fog · Cinematic Lighting",
+    role: "Cinematic Artist · Environment · Lighting",
+    tools: ["Unreal Engine 5", "Lumen", "Sequencer", "Volumetric Fog"],
+    contribution:
+      "Character staging, cyberpunk environment design, cinematic lighting, atmospheric fog and camera composition.",
+    notes:
+      "A moody underground night scene built around warm practical lighting, neon accents and volumetric atmosphere. The composition uses the character as the focal point while the surrounding architecture and haze establish depth."
   },
+
   {
     id: "RR-02",
     poster: "img/poster-beach.jpg",
