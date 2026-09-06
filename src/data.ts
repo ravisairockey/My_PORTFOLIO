@@ -116,6 +116,7 @@ export const FRAMES = [
     code: "F-03",
     title: "FROZEN PULSE",
     meta: "Icy cavern · electric light trails · misty water · ethereal glow · cold LUT",
+    video: "videos/FrozenPulse.mp4",
   },
   {
     src: "img/g-alley.jpg",
@@ -129,6 +130,7 @@ export const FRAMES = [
     code: "F-05",
     title: "EMBERFALL",
     meta: "Fire and ice clash · cavern arena · glowing embers · cinematic motion",
+    video: "videos/EmberFall.mp4",
   },
   {
     src: "img/g-peaks.jpg",
