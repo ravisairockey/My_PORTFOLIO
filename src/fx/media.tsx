@@ -418,7 +418,7 @@ export function PeelSticker({
       role="button"
       tabIndex={0}
       aria-label={`${name} — ${meta}`}
-      className="group relative flex select-none flex-col justify-between gap-7 overflow-hidden rounded-2xl p-5 text-left text-ink transition-all duration-500 will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/50 md:p-6"
+      className="group relative flex select-none flex-col justify-between gap-7 overflow-hidden rounded-2xl p-5 text-left text-ink transition-[transform,box-shadow] duration-500 will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/50 md:p-6"
       style={{
         background: `linear-gradient(160deg, ${t.face} 0%, ${t.face} 55%, ${t.under}33 100%)`,
         border: "1px solid rgba(20,23,15,0.14)",

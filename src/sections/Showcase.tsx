@@ -41,8 +41,11 @@ export function Reel() {
               />
               <figcaption className="mt-6 flex items-start justify-between gap-6">
                 <div>
-                  <p className="font-display text-2xl md:text-4xl">{v.title}</p>
-                  <p className="mt-1.5 text-sm text-cream/65">{v.sub}</p>
+                  <p className="flex items-baseline gap-3 font-display text-2xl md:text-4xl">
+                    <span className="tnum font-body text-[10px] tracking-[0.3em] text-sage">{v.id}</span>
+                    {v.title}
+                  </p>
+                  <p className="mt-1.5 max-w-md text-sm leading-relaxed text-cream/65">{v.sub}</p>
                 </div>
                 <p className="max-w-[180px] pt-1 text-right text-[9px] uppercase leading-loose tracking-[0.2em] text-cream/40">
                   {v.tech}
@@ -59,7 +62,7 @@ export function Reel() {
                       {v.tools.map((t) => (
                         <li
                           key={t}
-                          className="rounded-full border border-cream/20 px-3 py-1 text-[9px] tracking-[0.2em] text-cream/75"
+                          className="rounded-full border border-cream/20 bg-cream/[0.04] px-3 py-1 text-[9px] tracking-[0.2em] text-cream/75 transition-colors duration-300 hover:border-sage/60 hover:text-cream"
                         >
                           {t}
                         </li>
@@ -90,12 +93,17 @@ export function Frames() {
     <section id="frames" className="relative scroll-mt-24 overflow-hidden px-5 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-[1440px]">
         <SectionTag n="03" label="Selected frames — environment studies" />
-        <SmokeyTitle
-          text={"FRAMES FROM\nOTHER WORLDS"}
-          className="font-display text-[clamp(2.6rem,5.6vw,5.6rem)] leading-[1.02] text-ink"
-        />
+        <div className="flex flex-wrap items-end justify-between gap-8">
+          <SmokeyTitle
+            text={"FRAMES FROM\nOTHER WORLDS"}
+            className="font-display text-[clamp(2.6rem,5.6vw,5.6rem)] leading-[1.02] text-ink"
+          />
+          <p className="tnum max-w-xs pb-3 text-[10px] uppercase leading-loose tracking-[0.2em] text-ink/55">
+            06 STUDIES — LIGHT · WEATHER · OVERGROWTH
+          </p>
+        </div>
         <p className="mt-6 max-w-md text-sm leading-relaxed text-ink/60">
-          Six studies in light, weather and overgrowth — blockouts, dressing passes and volumetric atmosphere.
+          Blockouts, dressing passes and volumetric atmosphere — each frame a study in light, weather and overgrowth.
         </p>
         <div className="mt-14">
           <Coverflow items={FRAMES} />

@@ -32,6 +32,26 @@ body {
   color: var(--color-abyss);
 }
 
+/* ─── Browser surfaces — themed, never default ───────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-moss);
+  outline-offset: 3px;
+}
+body {
+  caret-color: var(--color-moss);
+}
+
+/* ─── Craft utilities ────────────────────────────────────────────────── */
+/* true numerals for codes, facts and coordinates */
+.tnum {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+/* soft fade at the marquee's running edges */
+.marquee-fade {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

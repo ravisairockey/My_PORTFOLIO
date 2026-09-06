@@ -53,7 +53,7 @@ export function SectionTag({
   return (
     <div className={`mb-12 flex items-center gap-4 ${light ? "text-cream" : "text-ink"}`}>
       <span
-        className={`rounded-md border px-2.5 py-1 text-[10px] tracking-[0.3em] ${
+        className={`tnum rounded-md border px-2.5 py-1 text-[10px] tracking-[0.3em] ${
           light ? "border-cream/30 bg-cream/10" : "border-ink/25 bg-ink/5"
         }`}
       >
@@ -96,7 +96,7 @@ export function Nav() {
 
         <a
           href="#contact"
-          className="flex items-center gap-2.5 rounded-full border border-ink/15 bg-cream/75 px-5 py-3 text-[9px] tracking-[0.25em] backdrop-blur-md transition-all duration-300 hover:bg-ink hover:text-cream active:scale-95"
+          className="flex items-center gap-2.5 rounded-full border border-ink/15 bg-cream/75 px-5 py-3 text-[9px] tracking-[0.25em] backdrop-blur-md transition-[background-color,color,transform] duration-300 hover:bg-ink hover:text-cream active:scale-95"
         >
           <span className="anim-pulse-dot h-1.5 w-1.5 rounded-full bg-moss" />
           OPEN FOR WORK
@@ -121,7 +121,7 @@ export function Hero() {
 
         <WarpText
           lines={[PROFILE.lineA, PROFILE.lineB]}
-          className="mt-8 font-display leading-[0.88] tracking-tight text-ink text-[clamp(3.1rem,11.5vw,10.5rem)]"
+          className="mt-8 font-display leading-[0.88] tracking-[-0.03em] text-ink text-[clamp(3.2rem,12vw,11rem)]"
         />
 
         <div className="mt-12 flex flex-col justify-between gap-10 md:flex-row md:items-end">
@@ -135,7 +135,7 @@ export function Hero() {
               (chip) => (
                 <li
                   key={chip}
-                  className="rounded-full border border-ink/15 bg-paper/70 px-4 py-2 text-[9px] tracking-[0.22em] text-ink/70 backdrop-blur-sm"
+                  className="tnum rounded-full border border-ink/15 bg-paper/80 px-4 py-2 text-[9px] tracking-[0.22em] text-ink/70 shadow-[0_8px_20px_-16px_rgba(20,23,15,.45)] backdrop-blur-sm transition-colors duration-300 hover:border-moss/50 hover:text-ink"
                 >
                   {chip}
                 </li>
@@ -147,14 +147,14 @@ export function Hero() {
         <div className="mb-16 mt-12 flex flex-wrap items-center gap-4 md:mb-20">
           <a
             href="#reel"
-            className="group inline-flex items-center gap-3 rounded-full bg-ink px-8 py-4 text-[10px] tracking-[0.3em] text-cream transition-all duration-300 hover:bg-moss active:scale-95"
+            className="group inline-flex items-center gap-3 rounded-full bg-ink px-8 py-4 text-[10px] tracking-[0.3em] text-cream shadow-[0_22px_44px_-20px_rgba(20,23,15,.6)] transition-[background-color,color,transform] duration-300 hover:bg-moss active:scale-95"
           >
             WATCH THE REELS
             <ArrowDown className="h-4 w-4 transition-transform duration-500 group-hover:translate-y-1" />
           </a>
           <a
             href="#origin"
-            className="group inline-flex items-center gap-3 rounded-full border border-ink/25 px-8 py-4 text-[10px] tracking-[0.3em] text-ink transition-all duration-300 hover:bg-blush hover:border-blush active:scale-95"
+            className="group inline-flex items-center gap-3 rounded-full border border-ink/25 px-8 py-4 text-[10px] tracking-[0.3em] text-ink transition-[background-color,border-color,color,transform] duration-300 hover:bg-blush hover:border-blush active:scale-95"
           >
             FIELD NOTES — 01
             <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
@@ -178,7 +178,7 @@ export function Hero() {
       </div>
 
       {/* outlined marquee strip */}
-      <div className="relative overflow-hidden border-y border-ink/10 py-5">
+      <div className="marquee-fade relative overflow-hidden border-y border-ink/10 py-5">
         <div className="anim-marquee flex w-max">
           {[0, 1].map((k) => (
             <span
@@ -219,10 +219,10 @@ export function Origin() {
               {FACTS.map(([k, v]) => (
                 <div
                   key={k}
-                  className="group grid grid-cols-[128px_1fr] gap-4 border-b border-ink/10 py-4 sm:grid-cols-[220px_1fr]"
+                  className="group grid grid-cols-[128px_1fr] gap-4 border-b border-ink/10 py-5 transition-colors duration-300 hover:border-moss/40 sm:grid-cols-[220px_1fr]"
                 >
                   <span className="pt-1 text-[9px] uppercase tracking-[0.28em] text-ink/45">{k}</span>
-                  <span className="font-display text-base transition-all duration-300 group-hover:translate-x-2 group-hover:text-moss md:text-lg">
+                  <span className="tnum font-display text-base transition-[transform,color] duration-300 group-hover:translate-x-2 group-hover:text-moss md:text-lg">
                     {v}
                   </span>
                 </div>
@@ -236,10 +236,10 @@ export function Origin() {
                 FIELD REF — BIOLUME GROVE · FLUID IMAGE REVEAL
               </span>
             </BlobReveal>
-            <div className="mt-6 rounded-xl border border-dashed border-ink/25 p-5 text-[10px] uppercase leading-loose tracking-[0.2em] text-ink/55">
-              <p>▸ FOCUS — ENVIRONMENT ART · NIAGARA VFX · CINEMATIC RENDERS</p>
-              <p>▸ LEARNING MODE — SELF-DIRECTED · PROJECT-BASED</p>
-              <p>▸ ENGINES — UNREAL ENGINE · UNITY · BLENDER</p>
+            <div className="mt-6 rounded-xl border border-dashed border-ink/25 bg-paper/60 p-5 text-[10px] uppercase leading-loose tracking-[0.2em] text-ink/55">
+              <p className="border-b border-ink/10 pb-2">▸ FOCUS — ENVIRONMENT ART · NIAGARA VFX · CINEMATIC RENDERS</p>
+              <p className="border-b border-ink/10 py-2">▸ LEARNING MODE — SELF-DIRECTED · PROJECT-BASED</p>
+              <p className="pt-2">▸ ENGINES — UNREAL ENGINE · UNITY · BLENDER</p>
             </div>
           </div>
         </div>
@@ -265,7 +265,7 @@ export function Toolkit() {
               MY DAY-TO-DAY PIPELINE — FROM BLOCKOUT TO CINEMATIC RENDER
             </p>
           </div>
-          <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-3">
+          <div className="mt-14 grid grid-cols-2 gap-5 md:grid-cols-3">
             {TOOLS.map((t) => (
               <PeelSticker key={t.name} icon={ICONS[t.icon]} name={t.name} meta={t.meta} tone={t.tone} />
             ))}
@@ -286,7 +286,7 @@ export function Contact() {
         <div className="grid items-center gap-16 lg:grid-cols-2">
           <div>
             <DotGlobe markers={MARKERS} />
-            <p className="mt-6 text-[10px] tracking-[0.32em] text-cream/50">
+            <p className="mt-6 tnum text-[10px] tracking-[0.32em] text-cream/50">
               12.9716° N · 77.5946° E — KARNATAKA, INDIA · DRAG TO SPIN
             </p>
           </div>

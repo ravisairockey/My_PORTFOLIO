@@ -109,14 +109,14 @@ export function Coverflow({ items }: { items: Frame[] }) {
           <button
             onClick={() => go(idx - 1)}
             aria-label="Previous frame"
-            className="grid h-11 w-11 place-items-center rounded-full border border-ink/20 transition-all duration-300 hover:bg-ink hover:text-cream active:scale-90"
+            className="grid h-11 w-11 place-items-center rounded-full border border-ink/20 transition-[background-color,color,transform] duration-300 hover:bg-ink hover:text-cream active:scale-90"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
           <button
             onClick={() => go(idx + 1)}
             aria-label="Next frame"
-            className="grid h-11 w-11 place-items-center rounded-full border border-ink/20 transition-all duration-300 hover:bg-ink hover:text-cream active:scale-90"
+            className="grid h-11 w-11 place-items-center rounded-full border border-ink/20 transition-[background-color,color,transform] duration-300 hover:bg-ink hover:text-cream active:scale-90"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -192,7 +192,7 @@ export function HoverList({ items }: { items: Discipline[] }) {
           <div className="flex items-baseline gap-5 md:gap-9">
             <span className="text-[10px] tracking-[0.35em] text-ink/45">{d.n}</span>
             <h3
-              className="vfont font-display text-3xl leading-none transition-all duration-500 group-hover:translate-x-4 group-hover:text-moss md:text-6xl"
+              className="vfont font-display text-3xl leading-none transition-[transform,color] duration-500 group-hover:translate-x-4 group-hover:text-moss md:text-6xl"
               style={{ "--w": active === i ? 850 : 420 } as CSSProperties}
             >
               {d.title}

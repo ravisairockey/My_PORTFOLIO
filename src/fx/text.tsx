@@ -159,14 +159,14 @@ export function SmokeyTitle({
     <div ref={ref} className="relative" style={{ filter: "url(#ink-bleed)" }}>
       <span
         aria-hidden
-        className={`absolute inset-0 transition-all duration-[1400ms] ease-out ${
+        className={`absolute inset-0 transition-[opacity,filter,transform] duration-[1400ms] ease-out ${
           inView ? "scale-[1.005] opacity-0 blur-[3px]" : "scale-[1.08] opacity-70 blur-[20px]"
         } ${light ? "text-sage" : "text-moss"} ${className}`}
       >
         {blocks("")}
       </span>
       <h2
-        className={`relative transition-all duration-[1100ms] ease-[cubic-bezier(.22,1,.36,1)] ${
+        className={`relative transition-[opacity,transform,letter-spacing] duration-[1100ms] ease-[cubic-bezier(.22,1,.36,1)] ${
           inView ? "translate-y-0 tracking-normal opacity-100" : "translate-y-7 tracking-[0.32em] opacity-0"
         } ${className}`}
       >
