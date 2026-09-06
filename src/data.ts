@@ -133,6 +133,7 @@ export const FRAMES = [
     code: "F-06",
     title: "PALE SUMMIT",
     meta: "Misty peaks · atmosphere depth pass",
+    video: "videos/PaleSummit.mp4",
   },
 ];
 

@@ -280,14 +280,26 @@ export function MagneticDock({ items }: { items: Frame[] }) {
             className="group relative min-w-0 shrink-0 grow-0 basis-auto overflow-hidden rounded-xl border border-ink/10 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-moss"
             style={{ transition: "border-color .3s" }}
           >
-            <img
-              src={f.src}
-              alt={f.title}
-              draggable={false}
-              className={`h-full w-full object-cover transition-transform duration-700 ${
-                expanded === i ? "" : "group-hover:scale-105"
-              }`}
-            />
+            {expanded === i && f.video ? (
+              <video
+                src={f.video}
+                poster={f.src}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <img
+                src={f.src}
+                alt={f.title}
+                draggable={false}
+                className={`h-full w-full object-cover transition-transform duration-700 ${
+                  expanded === i ? "" : "group-hover:scale-105"
+                }`}
+              />
+            )}
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-abyss/75 via-transparent to-transparent" />
             {expanded === i ? (
               <span className="absolute bottom-4 left-4 right-4 text-cream">
@@ -295,8 +307,8 @@ export function MagneticDock({ items }: { items: Frame[] }) {
                 <span className="mt-1 block text-[9px] uppercase tracking-[0.2em] text-cream/75">
                   {f.meta}
                 </span>
-                <span className="mt-2 block text-[8px] tracking-[0.35em] text-cream/65">
-                  CLICK AGAIN TO DOCK
+                <span className="mt-2 block text-[9px] tracking-[0.35em] text-cream/65">
+                  {f.video ? "▸ NOW PLAYING · CLICK AGAIN TO DOCK" : "CLICK AGAIN TO DOCK"}
                 </span>
               </span>
             ) : (

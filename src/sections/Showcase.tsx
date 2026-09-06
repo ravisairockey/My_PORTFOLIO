@@ -13,7 +13,7 @@ import { SectionTag } from "./Core";
 export function Reel() {
   return (
     <section id="reel" className="relative scroll-mt-24 bg-abyss px-5 py-28 text-cream md:px-10 md:py-40">
-      <div className="mx-auto max-w-[1440px]">
+      <div className="mx-auto max-w-[1440px] 2xl:max-w-[1760px]">
         <SectionTag n="02" label="Reel — two weathers" light />
         <div className="flex flex-wrap items-end justify-between gap-8">
           <SmokeyTitle
@@ -47,7 +47,7 @@ export function Reel() {
                   </p>
                   <p className="mt-1.5 max-w-md text-sm leading-relaxed text-cream/65">{v.sub}</p>
                 </div>
-                <p className="max-w-[180px] pt-1 text-right text-[9px] uppercase leading-loose tracking-[0.2em] text-cream/65">
+                <p className="max-w-[150px] pt-1 text-right text-[9px] uppercase leading-loose tracking-[0.2em] text-cream/65 md:max-w-[180px]">
                   {v.tech}
                 </p>
               </figcaption>
@@ -91,7 +91,7 @@ export function Reel() {
 export function Frames() {
   return (
     <section id="frames" className="relative scroll-mt-24 overflow-hidden px-5 py-28 md:px-10 md:py-40">
-      <div className="mx-auto max-w-[1440px]">
+      <div className="mx-auto max-w-[1440px] 2xl:max-w-[1760px]">
         <SectionTag n="03" label="Selected frames — environment studies" />
         <div className="flex flex-wrap items-end justify-between gap-8">
           <SmokeyTitle
@@ -120,7 +120,7 @@ export function Frames() {
 export function Disciplines() {
   return (
     <section id="disciplines" className="relative scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
-      <div className="mx-auto max-w-[1440px]">
+      <div className="mx-auto max-w-[1440px] 2xl:max-w-[1760px]">
         <SectionTag n="04" label="Disciplines — hover to preview" />
         <div className="flex flex-wrap items-end justify-between gap-8">
           <SmokeyTitle

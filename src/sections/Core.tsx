@@ -69,7 +69,7 @@ export function SectionTag({
 export function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 md:px-8">
+      <div className="mx-auto flex max-w-[1440px] 2xl:max-w-[1760px] items-center justify-between px-5 py-4 md:px-8">
         <a href="#top" className="group flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-sage font-display text-xs font-bold tracking-tight text-ink shadow-[0_10px_24px_-12px_rgba(20,23,15,.5)] transition-transform duration-500 group-hover:rotate-[-8deg]">
             RSV
@@ -113,7 +113,7 @@ const MARQUEE =
 export function Hero() {
   return (
     <section id="top" className="relative flex min-h-screen flex-col justify-end overflow-hidden pt-32">
-      <div className="mx-auto w-full max-w-[1440px] px-5 md:px-10">
+      <div className="mx-auto w-full max-w-[1440px] 2xl:max-w-[1760px] px-5 md:px-10">
         <DuskReveal
           text="PORTFOLIO ’26 — KARNATAKA, INDIA · ENVIRONMENT ARTIST & GAME DESIGNER"
           className="block text-[10px] tracking-[0.42em] text-ink/60"
@@ -121,7 +121,7 @@ export function Hero() {
 
         <WarpText
           lines={[PROFILE.lineA, PROFILE.lineB]}
-          className="mt-8 font-display leading-[0.88] tracking-[-0.03em] text-ink text-[clamp(3.2rem,12vw,11rem)]"
+          className="mt-8 font-display leading-[0.88] tracking-[-0.03em] text-ink text-[clamp(2.55rem,12vw,11rem)]"
         />
 
         <div className="mt-12 flex flex-col justify-between gap-10 md:flex-row md:items-end">
@@ -200,7 +200,7 @@ export function Hero() {
 export function Origin() {
   return (
     <section id="origin" className="relative scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
-      <div className="mx-auto max-w-[1440px]">
+      <div className="mx-auto max-w-[1440px] 2xl:max-w-[1760px]">
         <SectionTag n="01" label="Origin — the overgrown brief" />
         <div className="grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-7">
@@ -252,7 +252,7 @@ export function Origin() {
 export function Toolkit() {
   return (
     <section id="toolkit" className="relative scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
-      <div className="relative mx-auto max-w-[1440px] overflow-hidden rounded-[2rem] border border-ink/10 bg-mist/25 px-6 py-16 md:p-16">
+      <div className="relative mx-auto max-w-[1440px] 2xl:max-w-[1760px] overflow-hidden rounded-[2rem] border border-ink/10 bg-mist/25 px-6 py-16 md:p-16">
         <ReactiveGrid />
         <div className="relative">
           <SectionTag n="05" label="Toolkit — peel the stack" />
@@ -281,7 +281,7 @@ export function Contact() {
   return (
     <section id="contact" className="relative scroll-mt-24 overflow-hidden bg-abyss px-5 py-28 text-cream md:px-10 md:py-40">
       <WaveArcs />
-      <div className="relative mx-auto max-w-[1440px]">
+      <div className="relative mx-auto max-w-[1440px] 2xl:max-w-[1760px]">
         <SectionTag n="06" label="Coordinates — say hello" light />
         <div className="grid items-center gap-16 lg:grid-cols-2">
           <div>
@@ -333,7 +333,7 @@ export function Contact() {
 export function Footer() {
   return (
     <footer className="relative z-10 bg-abyss px-5 pb-10 text-cream md:px-10">
-      <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-4 border-t border-cream/10 pt-8 text-[9px] uppercase tracking-[0.3em] text-cream/65">
+      <div className="mx-auto flex max-w-[1440px] 2xl:max-w-[1760px] flex-wrap items-center justify-between gap-4 border-t border-cream/10 pt-8 text-[9px] uppercase tracking-[0.3em] text-cream/65">
         <span className="tracking-[0.24em]">©26 • RAVI • SAI • VIGNESWARA — AMIL'S UNIVERSE</span>
         <a
           href="#top"
