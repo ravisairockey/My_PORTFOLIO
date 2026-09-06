@@ -109,6 +109,7 @@ export const FRAMES = [
     code: "F-02",
     title: "LAVA VEIL",
     meta: "Volcanic wasteland · molten river · towering monoliths · smoky dusk",
+    video: "videos/DesertMonster.mp4",
   },
   {
     src: "img/g-temple.jpg",
@@ -121,6 +122,7 @@ export const FRAMES = [
     code: "F-04",
     title: "NEON RUNOFF",
     meta: "Rain-slick alley · emissive decals · wetness mask",
+    video: "videos/Cyberpunk.mp4",
   },
   {
     src: "img/g-reef.jpg",
