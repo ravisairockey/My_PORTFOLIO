@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { DISCIPLINES, FRAMES } from "../data";
-import { clamp, useRaf } from "./util";
+import { clamp, useIsTouchMobile, useVisibleRaf } from "./util";
 
 type Frame = (typeof FRAMES)[number];
 type Discipline = (typeof DISCIPLINES)[number];
@@ -133,9 +133,10 @@ export function HoverList({ items }: { items: Discipline[] }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const floatRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(-1);
+  const touch = useIsTouchMobile();
   const pos = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
 
-  useRaf(() => {
+  useVisibleRaf(wrapRef, () => {
     const p = pos.current;
     const vx = p.tx - p.x;
     p.x += vx * 0.12;
@@ -182,25 +183,55 @@ export function HoverList({ items }: { items: Discipline[] }) {
         <div
           key={d.n}
           onMouseEnter={() => setActive(i)}
-          className="group relative flex cursor-pointer items-end justify-between gap-6 border-t border-ink/15 px-2 py-8 transition-colors md:py-10"
+          onClick={() => {
+            if (touch) setActive((a) => (a === i ? -1 : i));
+          }}
+          role={touch ? "button" : undefined}
+          tabIndex={touch ? 0 : undefined}
+          aria-expanded={touch ? active === i : undefined}
+          onKeyDown={(e) => {
+            if (touch && (e.key === "Enter" || e.key === " ")) {
+              e.preventDefault();
+              setActive((a) => (a === i ? -1 : i));
+            }
+          }}
+          className="group relative cursor-pointer border-t border-ink/15 px-2 py-8 transition-colors md:py-10"
         >
           <div
             aria-hidden
             className="absolute inset-0 -z-10 origin-bottom scale-y-0 transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-y-100"
             style={{ background: WASHES[i % WASHES.length] }}
           />
-          <div className="flex items-baseline gap-5 md:gap-9">
-            <span className="text-[10px] tracking-[0.35em] text-ink/70">{d.n}</span>
-            <h3
-              className="vfont font-display text-3xl leading-none transition-[transform,color] duration-500 group-hover:translate-x-4 group-hover:text-moss md:text-6xl"
-              style={{ "--w": active === i ? 850 : 420 } as CSSProperties}
-            >
-              {d.title}
-            </h3>
+          <div className="flex items-end justify-between gap-6">
+            <div className="flex items-baseline gap-5 md:gap-9">
+              <span className="text-[10px] tracking-[0.35em] text-ink/70">{d.n}</span>
+              <h3
+                className="vfont font-display text-3xl leading-none transition-[transform,color] duration-500 group-hover:translate-x-4 group-hover:text-moss md:text-6xl"
+                style={{ "--w": active === i ? 850 : 420 } as CSSProperties}
+              >
+                {d.title}
+              </h3>
+            </div>
+            <p className="hidden max-w-[230px] px-2 text-right text-[10px] uppercase leading-relaxed tracking-[0.16em] text-ink/55 md:block">
+              {d.meta}
+            </p>
           </div>
-          <p className="hidden max-w-[230px] px-2 text-right text-[10px] uppercase leading-relaxed tracking-[0.16em] text-ink/55 md:block">
-            {d.meta}
-          </p>
+          {touch && active === i && (
+            <div
+              className="mt-5 overflow-hidden rounded-xl border border-ink/15 shadow-[0_24px_44px_-22px_rgba(20,23,15,.5)] md:hidden"
+              style={{ animation: "hl-swap .55s cubic-bezier(.22,1,.36,1) both" }}
+            >
+              <img
+                src={d.img}
+                alt={`${d.title} — ${d.meta}`}
+                loading="lazy"
+                className="h-44 w-full object-cover"
+              />
+              <p className="bg-paper/80 px-3 py-2.5 text-[9px] uppercase leading-relaxed tracking-[0.2em] text-ink/60">
+                {d.meta}
+              </p>
+            </div>
+          )}
         </div>
       ))}
       <div className="border-t border-ink/15" />
@@ -218,8 +249,9 @@ export function MagneticDock({ items }: { items: Frame[] }) {
   const height = useRef(220);
   const mouse = useRef({ x: -9999, inside: false });
   const [expanded, setExpanded] = useState(-1);
+  const touch = useIsTouchMobile();
 
-  useRaf(() => {
+  useVisibleRaf(wrapRef, () => {
     const wrap = wrapRef.current;
     if (!wrap) return;
     const r = wrap.getBoundingClientRect();
@@ -277,8 +309,10 @@ export function MagneticDock({ items }: { items: Frame[] }) {
             onClick={() => setExpanded(expanded === i ? -1 : i)}
             aria-expanded={expanded === i}
             aria-label={`${f.title} — ${expanded === i ? "collapse" : "expand"}`}
-            className="group relative min-w-0 shrink-0 grow-0 basis-auto overflow-hidden rounded-xl border border-ink/10 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-moss"
-            style={{ transition: "border-color .3s" }}
+            className={`group relative min-w-0 shrink-0 grow-0 basis-auto overflow-hidden rounded-xl border border-ink/10 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-moss ${
+              touch ? "active:scale-[0.98]" : ""
+            }`}
+            style={{ transition: "border-color .3s, transform .2s ease-out" }}
           >
             {expanded === i && f.video ? (
               <video

@@ -3,14 +3,48 @@
                        03 Frames (coverflow + magnetic dock)
                        04 Disciplines (hover-reveal list)
    ════════════════════════════════════════════════════════════════════ */
+import { useEffect, useRef } from "react";
 import { DISCIPLINES, FRAMES, VIDEOS } from "../data";
 import { Coverflow, HoverList, MagneticDock } from "../fx/carousels";
 import { LiquidVideo } from "../fx/liquidVideo";
 import { DuskReveal, SmokeyTitle } from "../fx/text";
+import { clamp, useIsTouchMobile } from "../fx/util";
 import { SectionTag } from "./Core";
 
 /* ── 02 · REEL — the two rendered-film slots ─────────────────────────── */
 export function Reel() {
+  const touch = useIsTouchMobile();
+  const figRefs = useRef<Array<HTMLElement | null>>([]);
+
+  /* mobile-only: gentle clamped parallax on the film cards while scrolling */
+  useEffect(() => {
+    if (!touch) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      for (const el of figRefs.current) {
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
+        const mid = r.top + r.height / 2 - window.innerHeight / 2;
+        const y = clamp(-mid * 0.04, -10, 10);
+        el.style.transform = `translate3d(0,${y.toFixed(1)}px,0)`;
+      }
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [touch]);
+
   return (
     <section id="reel" className="relative scroll-mt-24 bg-abyss px-5 py-28 text-cream md:px-10 md:py-40">
       <div className="mx-auto max-w-[1440px] 2xl:max-w-[1760px]">
@@ -29,8 +63,14 @@ export function Reel() {
         </div>
 
         <div className="mt-16 grid gap-12 md:grid-cols-2">
-          {VIDEOS.map((v) => (
-            <figure key={v.id}>
+          {VIDEOS.map((v, i) => (
+            <figure
+              key={v.id}
+              ref={(el) => {
+                figRefs.current[i] = el;
+              }}
+              className="will-change-transform"
+            >
               <LiquidVideo
                 poster={v.poster}
                 video={v.video}

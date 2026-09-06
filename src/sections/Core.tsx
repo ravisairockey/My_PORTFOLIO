@@ -2,6 +2,7 @@
    CORE SECTIONS — Nav · Hero · 01 Origin · 05 Toolkit · 06 Contact · Footer
    (Reel/Frames/Disciplines live in Showcase.tsx)
    ════════════════════════════════════════════════════════════════════ */
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import {
   ArrowDown,
@@ -13,8 +14,10 @@ import {
   Gamepad2,
   GitBranch,
   Layers,
+  Menu,
   Mountain,
   Palette,
+  X,
 } from "lucide-react";
 import {
   FACTS,
@@ -27,6 +30,7 @@ import {
 import { DotGlobe, ReactiveGrid, WaveArcs } from "../fx/canvas";
 import { BlobReveal, PeelSticker } from "../fx/media";
 import { DuskReveal, SmokeyTitle, SwapLink, WarpText } from "../fx/text";
+import { useIsTouchMobile, useInView, useParallax, usePrefersReducedMotion } from "../fx/util";
 
 /* lucide icon registry for TOOLS[].icon keys */
 const ICONS: Record<string, ReactNode> = {
@@ -50,8 +54,12 @@ export function SectionTag({
   label: string;
   light?: boolean;
 }) {
+  const touch = useIsTouchMobile();
+  const reduced = usePrefersReducedMotion();
+  const { ref, inView } = useInView<HTMLDivElement>(0.6);
+  const reveal = touch && !reduced;
   return (
-    <div className={`mb-12 flex items-center gap-4 ${light ? "text-cream" : "text-ink"}`}>
+    <div ref={ref} className={`mb-12 flex items-center gap-4 ${light ? "text-cream" : "text-ink"}`}>
       <span
         className={`tnum rounded-md border px-2.5 py-1 text-[10px] tracking-[0.3em] ${
           light ? "border-cream/30 bg-cream/10" : "border-ink/25 bg-ink/5"
@@ -59,7 +67,13 @@ export function SectionTag({
       >
         {n}
       </span>
-      <span className={`h-px flex-1 ${light ? "bg-cream/20" : "bg-ink/15"}`} />
+      <span
+        aria-hidden
+        className={`h-px flex-1 origin-left ${light ? "bg-cream/20" : "bg-ink/15"} ${
+          reveal ? "transition-transform duration-1000 ease-[cubic-bezier(.22,1,.36,1)]" : ""
+        }`}
+        style={reveal ? { transform: inView ? "scaleX(1)" : "scaleX(0)" } : undefined}
+      />
       <span className="text-[9px] uppercase tracking-[0.42em] opacity-60">{label}</span>
     </div>
   );
@@ -67,11 +81,51 @@ export function SectionTag({
 
 /* ── NAV — glass pill + direction-swap links ─────────────────────────── */
 export function Nav() {
+  const touch = useIsTouchMobile();
+  const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!touch) return;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        setScrolled(y > 40);
+        setProgress(max > 0 ? Math.min(1, y / max) : 0);
+        ticking = false;
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [touch]);
+
+  useEffect(() => {
+    if (!touch) return;
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open, touch]);
+
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="mx-auto flex max-w-[1440px] 2xl:max-w-[1760px] items-center justify-between px-5 py-4 md:px-8">
-        <a href="#top" className="group flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-sage font-display text-xs font-bold tracking-tight text-ink shadow-[0_10px_24px_-12px_rgba(20,23,15,.5)] transition-transform duration-500 group-hover:rotate-[-8deg]">
+      <div
+        className={`mx-auto flex max-w-[1440px] 2xl:max-w-[1760px] items-center justify-between px-5 transition-all duration-500 md:px-8 ${
+          touch && scrolled ? "py-2.5" : "py-4"
+        }`}
+      >
+        <a href="#top" onClick={() => setOpen(false)} className="group flex items-center gap-3">
+          <span
+            className={`grid place-items-center rounded-xl bg-sage font-display text-xs font-bold tracking-tight text-ink shadow-[0_10px_24px_-12px_rgba(20,23,15,.5)] transition-all duration-500 group-hover:rotate-[-8deg] ${
+              touch && scrolled ? "h-9 w-9" : "h-10 w-10"
+            }`}
+          >
             RSV
           </span>
           <span className="hidden text-[9px] uppercase leading-relaxed tracking-[0.3em] text-ink/60 sm:block">
@@ -101,7 +155,75 @@ export function Nav() {
           <span className="anim-pulse-dot h-1.5 w-1.5 rounded-full bg-moss" />
           OPEN FOR WORK
         </a>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            aria-expanded={open}
+            className="grid h-11 w-11 place-items-center rounded-full border border-ink/15 bg-cream/75 text-ink shadow-[0_12px_28px_-18px_rgba(20,23,15,.5)] backdrop-blur-md transition-[background-color,color,transform] duration-300 hover:bg-ink hover:text-cream active:scale-95 lg:hidden"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
       </div>
+
+      {/* scroll-progress hairline — mobile only */}
+      {touch && (
+        <div aria-hidden className="h-[2px] w-full bg-ink/10 lg:hidden">
+          <div
+            className="h-full origin-left bg-gradient-to-r from-sage to-moss"
+            style={{ transform: `scaleX(${progress})` }}
+          />
+        </div>
+      )}
+
+      {/* full-screen mobile menu — mobile only */}
+      {touch && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+          className={`fixed inset-0 z-[70] flex flex-col bg-abyss/95 backdrop-blur-lg transition-opacity duration-500 lg:hidden ${
+            open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+          }`}
+        >
+          <div className="flex items-center justify-between px-5 py-4 md:px-8">
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-sage font-display text-xs font-bold text-ink">
+              RSV
+            </span>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close menu"
+              className="grid h-11 w-11 place-items-center rounded-full border border-cream/25 text-cream transition-[background-color,color,transform] duration-300 hover:bg-cream hover:text-ink active:scale-95"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+          <nav className="flex flex-1 flex-col justify-center px-8">
+            {NAV_LINKS.map((l, i) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className={`border-b border-cream/10 py-4 font-display text-4xl text-cream transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${
+                  open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+                }`}
+                style={{ transitionDelay: open ? `${120 + i * 60}ms` : "0ms" }}
+              >
+                <span className="tnum mr-4 text-[10px] tracking-[0.3em] text-sage">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {l.label}
+              </a>
+            ))}
+          </nav>
+          <div className="px-8 pb-10">
+            <a href={`mailto:${PROFILE.email}`} className="text-[10px] tracking-[0.3em] text-cream/70">
+              {PROFILE.email}
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
@@ -111,8 +233,37 @@ const MARQUEE =
   "OVERGROWN WORLDS · TIDAL LIGHT · LEVEL DESIGN · CINEMATIC MOOD · VEGETATION SYSTEMS · ";
 
 export function Hero() {
+  const touch = useIsTouchMobile();
+  const reduced = usePrefersReducedMotion();
+  const marqueeRef = useRef<HTMLDivElement>(null);
+
+  /* mobile-only: marquee speed breathes with scroll velocity */
+  useEffect(() => {
+    if (!touch || reduced) return;
+    const el = marqueeRef.current;
+    if (!el) return;
+    let pos = 0;
+    let lastY = window.scrollY;
+    let vel = 0;
+    let last = performance.now();
+    let raf = 0;
+    const loop = (t: number) => {
+      raf = requestAnimationFrame(loop);
+      const dt = Math.min(48, t - last);
+      last = t;
+      const y = window.scrollY;
+      vel += ((Math.abs(y - lastY) * 60) / dt - vel) * 0.08;
+      lastY = y;
+      const half = el.scrollWidth / 2;
+      pos = (pos + (0.55 + Math.min(vel * 0.014, 3.2)) * dt * 0.06) % half;
+      el.style.transform = `translate3d(${-pos}px,0,0)`;
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [touch, reduced]);
+
   return (
-    <section id="top" className="relative flex min-h-screen flex-col justify-end overflow-hidden pt-32">
+    <section id="top" className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pt-32">
       <div className="mx-auto w-full max-w-[1440px] 2xl:max-w-[1760px] px-5 md:px-10">
         <DuskReveal
           text="PORTFOLIO ’26 — KARNATAKA, INDIA · ENVIRONMENT ARTIST & GAME DESIGNER"
@@ -179,7 +330,7 @@ export function Hero() {
 
       {/* outlined marquee strip */}
       <div className="marquee-fade relative overflow-hidden border-y border-ink/10 py-5">
-        <div className="anim-marquee flex w-max">
+        <div ref={marqueeRef} className={`flex w-max will-change-transform ${touch ? "" : "anim-marquee"}`}>
           {[0, 1].map((k) => (
             <span
               key={k}
@@ -198,6 +349,12 @@ export function Hero() {
 
 /* ── 01 · ORIGIN — fact table + blob-reveal portrait ─────────────────── */
 export function Origin() {
+  const touch = useIsTouchMobile();
+  const reduced = usePrefersReducedMotion();
+  const { ref: factsRef, inView: factsIn } = useInView<HTMLDivElement>(0.2, false);
+  const portraitRef = useRef<HTMLDivElement>(null);
+  useParallax(portraitRef, touch && !reduced);
+
   return (
     <section id="origin" className="relative scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-[1440px] 2xl:max-w-[1760px]">
@@ -215,11 +372,20 @@ export function Origin() {
             />
 
             {/* fact table — straight from the brief */}
-            <div className="mt-14 border-t border-ink/10">
-              {FACTS.map(([k, v]) => (
+            <div ref={factsRef} className="mt-14 border-t border-ink/10">
+              {FACTS.map(([k, v], i) => (
                 <div
                   key={k}
                   className="group grid grid-cols-[128px_1fr] gap-4 border-b border-ink/10 py-5 transition-colors duration-300 hover:border-moss/40 sm:grid-cols-[220px_1fr]"
+                  style={
+                    touch && !reduced
+                      ? {
+                          opacity: factsIn ? 1 : 0,
+                          transform: factsIn ? "none" : "translateY(14px)",
+                          transition: `opacity .6s ease-out ${i * 55}ms, transform .6s cubic-bezier(.22,1,.36,1) ${i * 55}ms`,
+                        }
+                      : undefined
+                  }
                 >
                   <span className="pt-1 text-[9px] uppercase tracking-[0.28em] text-ink/70">{k}</span>
                   <span className="tnum font-display text-base transition-[transform,color] duration-300 group-hover:translate-x-2 group-hover:text-moss md:text-lg">
@@ -231,11 +397,13 @@ export function Origin() {
           </div>
 
           <div className="lg:col-span-5">
+            <div ref={portraitRef} className="will-change-transform">
             <BlobReveal src="img/g-forest.jpg" alt="Field reference — Biolume Grove environment study" ratio="4 / 5" className="rounded-2xl shadow-[0_40px_70px_-30px_rgba(20,23,15,.5)]">
               <span className="absolute bottom-4 left-4 rounded-md bg-abyss/55 px-3 py-1.5 text-[9px] tracking-[0.3em] text-cream backdrop-blur-sm">
                 FIELD REF — BIOLUME GROVE · FLUID IMAGE REVEAL
               </span>
             </BlobReveal>
+            </div>
             <div className="mt-6 rounded-xl border border-dashed border-ink/25 bg-paper/60 p-5 text-[10px] uppercase leading-loose tracking-[0.2em] text-ink/55">
               <p className="border-b border-ink/10 pb-2">▸ FOCUS — ENVIRONMENT ART · NIAGARA VFX · CINEMATIC RENDERS</p>
               <p className="border-b border-ink/10 py-2">▸ LEARNING MODE — SELF-DIRECTED · PROJECT-BASED</p>

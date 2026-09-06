@@ -4,7 +4,7 @@
    ════════════════════════════════════════════════════════════════════ */
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { clamp, useInView, usePrefersReducedMotion, useRaf } from "./util";
+import { clamp, useInView, usePrefersReducedMotion, useVisibleRaf } from "./util";
 
 /* ── MESH TEXT ────────────────────────────────────────────────────────
    Per-character springs: letters are dragged toward the cursor and spring
@@ -30,6 +30,7 @@ export function WarpText({
 }) {
   const chars = useRef<WarpChar[]>([]);
   const mouse = useRef({ x: -9999, y: -9999 });
+  const h1Ref = useRef<HTMLHeadingElement>(null);
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
@@ -38,7 +39,8 @@ export function WarpText({
     return () => window.removeEventListener("pointermove", move);
   }, []);
 
-  useRaf(
+  useVisibleRaf(
+    h1Ref,
     (t) => {
       for (const c of chars.current) {
         if (!c || !c.el) continue;
@@ -72,7 +74,7 @@ export function WarpText({
   chars.current = [];
   let idx = 0;
   return (
-    <h1 className={className} aria-label={lines.join(" ")}>
+    <h1 ref={h1Ref} className={className} aria-label={lines.join(" ")}>
       {lines.map((line, li) => (
         <span key={li} aria-hidden className="block whitespace-nowrap">
           {line.split("").map((ch) => {
