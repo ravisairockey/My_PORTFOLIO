@@ -221,7 +221,7 @@ export function Origin() {
                   key={k}
                   className="group grid grid-cols-[128px_1fr] gap-4 border-b border-ink/10 py-5 transition-colors duration-300 hover:border-moss/40 sm:grid-cols-[220px_1fr]"
                 >
-                  <span className="pt-1 text-[9px] uppercase tracking-[0.28em] text-ink/45">{k}</span>
+                  <span className="pt-1 text-[9px] uppercase tracking-[0.28em] text-ink/70">{k}</span>
                   <span className="tnum font-display text-base transition-[transform,color] duration-300 group-hover:translate-x-2 group-hover:text-moss md:text-lg">
                     {v}
                   </span>
@@ -286,7 +286,7 @@ export function Contact() {
         <div className="grid items-center gap-16 lg:grid-cols-2">
           <div>
             <DotGlobe markers={MARKERS} />
-            <p className="mt-6 tnum text-[10px] tracking-[0.32em] text-cream/50">
+            <p className="mt-6 tnum text-[10px] tracking-[0.32em] text-cream/65">
               12.9716° N · 77.5946° E — KARNATAKA, INDIA · DRAG TO SPIN
             </p>
           </div>
@@ -333,7 +333,7 @@ export function Contact() {
 export function Footer() {
   return (
     <footer className="relative z-10 bg-abyss px-5 pb-10 text-cream md:px-10">
-      <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-4 border-t border-cream/10 pt-8 text-[9px] uppercase tracking-[0.3em] text-cream/50">
+      <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-4 border-t border-cream/10 pt-8 text-[9px] uppercase tracking-[0.3em] text-cream/65">
         <span className="tracking-[0.24em]">©26 • RAVI • SAI • VIGNESWARA — AMIL'S UNIVERSE</span>
         <a
           href="#top"

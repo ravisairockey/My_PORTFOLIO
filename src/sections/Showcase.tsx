@@ -47,14 +47,14 @@ export function Reel() {
                   </p>
                   <p className="mt-1.5 max-w-md text-sm leading-relaxed text-cream/65">{v.sub}</p>
                 </div>
-                <p className="max-w-[180px] pt-1 text-right text-[9px] uppercase leading-loose tracking-[0.2em] text-cream/40">
+                <p className="max-w-[180px] pt-1 text-right text-[9px] uppercase leading-loose tracking-[0.2em] text-cream/65">
                   {v.tech}
                 </p>
               </figcaption>
 
               {v.role && (
                 <div className="mt-6 border-t border-cream/10 pt-5">
-                  <p className="text-[9px] uppercase tracking-[0.3em] text-cream/50">
+                  <p className="text-[9px] uppercase tracking-[0.3em] text-cream/65">
                     ROLE — <span className="text-sage">{v.role}</span>
                   </p>
                   {v.tools && (
@@ -73,7 +73,7 @@ export function Reel() {
                     <p className="mt-4 text-xs leading-relaxed text-cream/70">{v.contribution}</p>
                   )}
                   {v.notes && (
-                    <p className="mt-4 border-l-2 border-sage/60 pl-3 text-[10px] uppercase leading-loose tracking-[0.16em] text-cream/45">
+                    <p className="mt-4 border-l-2 border-sage/60 pl-3 text-[10px] uppercase leading-loose tracking-[0.16em] text-cream/65">
                       {v.notes}
                     </p>
                   )}

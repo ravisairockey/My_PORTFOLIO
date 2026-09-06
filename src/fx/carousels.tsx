@@ -190,7 +190,7 @@ export function HoverList({ items }: { items: Discipline[] }) {
             style={{ background: WASHES[i % WASHES.length] }}
           />
           <div className="flex items-baseline gap-5 md:gap-9">
-            <span className="text-[10px] tracking-[0.35em] text-ink/45">{d.n}</span>
+            <span className="text-[10px] tracking-[0.35em] text-ink/70">{d.n}</span>
             <h3
               className="vfont font-display text-3xl leading-none transition-[transform,color] duration-500 group-hover:translate-x-4 group-hover:text-moss md:text-6xl"
               style={{ "--w": active === i ? 850 : 420 } as CSSProperties}
@@ -295,7 +295,7 @@ export function MagneticDock({ items }: { items: Frame[] }) {
                 <span className="mt-1 block text-[9px] uppercase tracking-[0.2em] text-cream/75">
                   {f.meta}
                 </span>
-                <span className="mt-2 block text-[8px] tracking-[0.35em] text-cream/50">
+                <span className="mt-2 block text-[8px] tracking-[0.35em] text-cream/65">
                   CLICK AGAIN TO DOCK
                 </span>
               </span>
@@ -307,7 +307,7 @@ export function MagneticDock({ items }: { items: Frame[] }) {
           </button>
         ))}
       </div>
-      <p className="mt-4 text-center text-[9px] uppercase tracking-[0.35em] text-ink/45">
+      <p className="mt-4 text-center text-[9px] uppercase tracking-[0.35em] text-ink/70">
         Magnetic Carousel — hover to magnify · click to expand
       </p>
     </div>
